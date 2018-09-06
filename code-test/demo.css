@@ -8,7 +8,7 @@ body {
 }
 
 .chat_window {
-  position: absolute;
+  /* position: absolute;
   width: calc(100% - 20px);
   max-width: 800px;
   height: 700px;
@@ -16,6 +16,18 @@ body {
   background-color: #fff;
   left: 50%;
   top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background-color: #f8f8f8;
+  overflow: hidden; */
+  position: absolute;
+  width: calc(40% - 20px);
+  max-width: 800px;
+  height: 300px;
+  border-radius: 10px;
+  background-color: #fff;
+  left: 80%;
+  top: 80%;
   transform: translateX(-50%) translateY(-50%);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #f8f8f8;
@@ -39,7 +51,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 550px;
+  height: 150px;
   overflow: scroll;
 }
 .messages .message {

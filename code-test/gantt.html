@@ -1,0 +1,49 @@
+<html>
+    <script src="node_modules/frappe-gantt/dist/frappe-gantt.min.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <link rel="stylesheet" href="node_modules/frappe-gantt/dist/frappe-gantt.css">
+    <body>
+        <div id="gantt">
+        </div>
+
+        <!-- <script>
+
+            let socket = io();
+
+            $(
+                function () {
+                    socket.on("init-display", msg => {
+                        let task = JSON.parse(msg);
+                        let tasks = [];
+                        tasks.push(task);
+                        new Gantt("#gantt", tasks);
+                    });
+                }
+            );
+        </script> -->
+    </body>
+
+
+    <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyChf2Un0py6gmil22fZtWKFDScuSV7AW54",
+            authDomain: "fir-215512.firebaseapp.com",
+            databaseURL: "https://fir-215512.firebaseio.com",
+            projectId: "firebase-215512",
+            storageBucket: "firebase-215512.appspot.com",
+            messagingSenderId: "338254226875"
+        };
+        firebase.initializeApp(config);
+
+        let database = firebase.database();
+
+            let ref = database.ref("/");
+
+            ref.on("value", snapShot => {
+                console.log(snapShot.val());
+            });
+    </script>
+</html>

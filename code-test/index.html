@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ALFRED</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			background: #ccc;
+		}
+		.container {
+			width: 80%;
+			margin: 0 auto;
+		}
+		/* custom class */
+		.gantt .bar-milestone .bar {
+			fill: tomato;
+		}
+	</style>
+	<link rel="stylesheet" href="frappe-gantt.css" />
+    <script src="task-manage.js"></script>
+	<script src="frappe-gantt.js"></script>
+
+	<!-- todo -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="demo.css">
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">(function () {
+		var Message;
+		Message = function (arg) {
+				this.text = arg.text, this.message_side = arg.message_side;
+				this.draw = function (_this) {
+						return function () {
+								var $message;
+								$message = $($('.message_template').clone().html());
+								$message.addClass(_this.message_side).find('.text').html(_this.text);
+								$('.messages').append($message);
+								return setTimeout(function () {
+										return $message.addClass('appeared');
+								}, 0);
+						};
+				}(this);
+				return this;
+		};
+		$(function () {
+				var getMessageText, message_side, sendMessageRight;
+				message_side = 'right';
+				getMessageText = function () {
+						var $message_input;
+						$message_input = $('.message_input');
+						return $message_input.val();
+				};
+				sendMessageRight = function (text) {
+						var $messages, message;
+						if (text.trim() === '') {
+								return;
+						}
+						$('.message_input').val('');
+						$messages = $('.messages');
+						// message_side = message_side === 'left' ? 'right' : 'left';
+						message_side = 'right';
+						message = new Message({
+								text: text,
+								message_side: message_side
+						});
+						message.draw();
+						console.log("scroll");
+						return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+				};
+				sendMessageLeft = function (text) {
+						var $messages, message;
+						if (text.trim() === '') {
+								return;
+						}
+						$('.message_input').val('');
+						$messages = $('.messages');
+						// message_side = message_side === 'left' ? 'right' : 'left';
+						message_side = 'left';
+						message = new Message({
+								text: text,
+								message_side: message_side
+						});
+						message.draw();
+						return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+				};
+				$('.send_message').click(function (e) {
+						sendMessage(getMessageText());
+
+				});
+				$('.message_input').keyup(function (e) {
+						if (e.which === 13) {
+							sendMessage(getMessageText());
+						}
+				});
+
+				function sendMessage(str){
+						sendMessageRight(str);
+
+						if (str.indexOf('$$$') !== -1) {
+								str = 'expensive'
+						} else if (str.indexOf('$$') !== -1) {
+								str = 'moderate'
+						} else if (str.indexOf('$') !== -1) {
+								str = 'cheap'
+						}
+
+						var xhttp;
+						xhttp = new XMLHttpRequest();
+						xhttp.onreadystatechange = function() {
+							if (this.readyState == 4 && this.status == 200) {
+								sendMessageLeft(this.responseText);
+							}
+						};
+						xhttp.open("GET", "getreply.php?message="+str, true);
+						xhttp.send();
+				}
+		});
+	}.call(this));</script>
+
+	<!-- todo -->
+</head>
+<body>
+	<!-- todo -->
+	<div class="chat_window">
+
+		<div class="top_menu">
+      		<div class="title">Group Chat</div>
+    	</div>
+		<!--Chat Content-->
+		<ul class="messages">
+		<li class="message left appeared">
+			<div class="avatar"></div>
+			<div class="text_wrapper">
+				<div class="text">Hi, how can I help you?</div>
+			</div>
+		</li>
+		</ul>
+
+
+		<div class="bottom_wrapper clearfix">
+			<div class="message_input_wrapper">
+				<input type="text" name= "message" class="message_input" placeholder="Type your message here...">
+			</div>
+			<div class="send_message" >
+				<div class="icon"></div>
+				<div class="text">Send</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="message_template">
+	<li class="message">
+		<div class="avatar"></div>
+		<div class="text_wrapper">
+			<div class="text"></div>
+		</div>
+	</li>
+	</div>
+	<!-- todo -->
+	<div class="container">
+		<h2>ALFRED</h2>
+		<div class="gantt-target"></div>
+	</div>
+	<script>
+		var tasks = [
+			{
+				start: '2018-10-01',
+				end: '2018-10-08',
+				name: 'Redesign website',
+				id: "Task 0",
+				progress: 20
+			},
+			{
+				start: '2018-10-03',
+				end: '2018-10-06',
+				name: 'Write new content',
+				id: "Task 1",
+				progress: 5,
+			},
+			{
+				start: '2018-10-04',
+				end: '2018-10-08',
+				name: 'Apply new styles',
+				id: "Task 2",
+				progress: 10,
+			},
+			{
+				start: '2018-10-08',
+				end: '2018-10-09',
+				name: 'Review',
+				id: "Task 3",
+				progress: 5,
+			},
+			{
+				start: '2018-10-12',
+				end: '2018-10-12',
+				name: 'Deploy',
+				id: "Task 4",
+				progress: 10,
+			},
+			{
+				start: '2018-10-11',
+				end: '2018-10-11',
+				name: 'Go Live!',
+				id: "Task 5",
+				progress: 20,
+				custom_class: 'bar-milestone'
+			},
+		]
+		var tasks_roll = [			{
+						start: '2018-10-13',
+						end: '2018-10-13',
+						name: 'Dead line',
+						id: "Task 6",
+						progress: 30,
+						custom_class: 'bar-milestone'
+					},];
+
+		var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
+			on_click: function (task) {
+				console.log(task);
+			},
+			on_date_change: function(task, start, end) {
+				console.log(task, start, end);
+			},
+			on_progress_change: function(task, progress) {
+				console.log(task, progress);
+			},
+			on_view_change: function(mode) {
+				console.log(mode);
+			}
+		});
+		console.log(gantt_chart);
+		function myFunction() {
+		tasks_roll.push(tasks.pop());
+		tasks_roll = arrangeTask(tasks_roll);
+    gantt_chart.refresh(tasks_roll);
+}
+		// delete gantt_chart;
+	</script>
+	<button onclick="myFunction()">Add task</button>
+</body>
+</html>
