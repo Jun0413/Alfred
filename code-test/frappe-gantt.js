@@ -225,6 +225,7 @@ var date_utils = {
     }
 };
 
+
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
 function padStart(str, targetLength, padString) {
     str = str + '';
@@ -468,9 +469,9 @@ class Bar {
     draw_avatar(){
       if (this.invalid) return;
       this.$avatar = createSVG('image', {
-          x: this.x-this.height,
+          x: this.x,
           y: this.y,
-          width: this.height,
+          width: this.height*2,
           height: this.height,
           class: 'bar-avatar',
           href: "robot.png",
@@ -758,12 +759,12 @@ class Bar {
         const bar = this.$bar,
             label = this.group.querySelector('.bar-label');
 
-        if (label.getBBox().width > bar.getWidth()) {
+        if (label.getBBox().width > bar.getWidth()-bar.getHeight()) {
             label.classList.add('big');
             label.setAttribute('x', bar.getX() + bar.getWidth() + 5);
         } else {
             label.classList.remove('big');
-            label.setAttribute('x', bar.getX() + bar.getWidth() / 2);
+            label.setAttribute('x', bar.getX()+bar.getHeight() + (bar.getWidth()-bar.getHeight()) / 2);
         }
     }
 
@@ -881,6 +882,7 @@ class Arrow {
             'data-from': this.from_task.task.id,
             'data-to': this.to_task.task.id
         });
+
     }
 
     update() {
@@ -1121,6 +1123,7 @@ class Gantt {
         this.bind_events();
     }
 
+
     change_view_mode(mode = this.options.view_mode) {
         this.update_view_scale(mode);
         this.setup_dates();
@@ -1154,6 +1157,7 @@ class Gantt {
         this.setup_gantt_dates();
         this.setup_date_values();
     }
+
 
     setup_gantt_dates() {
         this.gantt_start = this.gantt_end = null;

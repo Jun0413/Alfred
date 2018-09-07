@@ -185,6 +185,7 @@
 				end: '2018-10-08',
 				name: 'Apply new styles',
 				id: "Task 2",
+				dependencies:"Task 6",
 				progress: 10,
 			},
 			{
@@ -192,6 +193,7 @@
 				end: '2018-10-09',
 				name: 'Review',
 				id: "Task 3",
+				dependencies:"Task 5, Task 6",
 				progress: 5,
 			},
 			{
@@ -203,16 +205,17 @@
 			},
 			{
 				start: '2018-10-11',
-				end: '2018-10-11',
+				end: '2018-10-12',
 				name: 'Go Live!',
 				id: "Task 5",
+				dependencies:'Task 6',
 				progress: 20,
 				custom_class: 'bar-milestone'
 			},
 		]
 		var tasks_roll = [			{
 						start: '2018-10-13',
-						end: '2018-10-13',
+						end: '2018-10-16',
 						name: 'Dead line',
 						id: "Task 6",
 						progress: 30,
@@ -234,13 +237,19 @@
 			}
 		});
 		console.log(gantt_chart);
+		var ifSlack = false;
 		function myFunction() {
 		tasks_roll.push(tasks.pop());
-		tasks_roll = arrangeTask(tasks_roll);
+		tasks_roll = arrangeTask(tasks_roll,ifSlack);
     gantt_chart.refresh(tasks_roll);
 }
+
+				function myFunction2() {
+		tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
+    gantt_chart.refresh(tasks_roll);}
 		// delete gantt_chart;
 	</script>
 	<button onclick="myFunction()">Add task</button>
+	<button onclick="myFunction2()">Slack!</button>
 </body>
 </html>

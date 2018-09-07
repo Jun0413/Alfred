@@ -1,4 +1,3 @@
-
 const YEAR = 'year';
 const MONTH = 'month';
 const DAY = 'day';
@@ -22,7 +21,7 @@ const month_names = [
     'December'
 ];
 
-var date_utils = {
+export default {
     parse(date, date_separator = '-', time_separator = /[.:]/) {
         if (date instanceof Date) {
             return date;
@@ -223,19 +222,6 @@ var date_utils = {
     }
 };
 
-
-function makeArray(w, h, val) {
-    var arr = [];
-    for(i = 0; i < h; i++) {
-        arr[i] = [];
-        for(j = 0; j < w; j++) {
-            arr[i][j] = val;
-        }
-    }
-    return arr;
-}
-
-
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
 function padStart(str, targetLength, padString) {
     str = str + '';
@@ -250,203 +236,4 @@ function padStart(str, targetLength, padString) {
         }
         return padString.slice(0, targetLength) + String(str);
     }
-}
-
-
-function arrangeTask(tasks,ifSlack) {
-    var id_map=[];
-    var e=makeArray(tasks.length,tasks.length,0);
-    //get id map
-    for(let i=0;i<tasks.length;i++)
-        if (typeof tasks[i].id === 'string' || !tasks[i].id) {
-        let dd=[];
-        if (tasks[i].id) {
-            dd = tasks[i].id
-                .split(',')
-                .map(d => d.trim())
-                .filter(d => d);
-        }
-        id_map[parseInt(dd[0][5])]=i;
-    }
-
-    //dependencies
-    for(let task of tasks)
-            if (typeof task.dependencies === 'string' || !task.dependencies) {
-            let deps = [];
-            if (task.dependencies) {
-                deps = task.dependencies
-                    .split(',')
-                    .map(d => d.trim())
-                    .filter(d => d);
-            }
-            task.dependencies = deps;
-        }
-    for(let i=0;i<tasks.length;i++)
-    {
-
-        for(let d of tasks[i].dependencies)
-        {
-            let idx = parseInt(d[5], 10);
-            e[i][id_map[idx]]=1;
-        }
-    }
-    //duration
-    for(let i =0;i<tasks.length;i++)
-    {
-        tasks[i].duration = date_utils.diff(date_utils.parse(tasks[i].end), date_utils.parse(tasks[i].start), 'hour');
-    }
-
-    for(let i=0;i<tasks.length;i++)
-    {
-        for(let j=0;j<tasks.length;j++)
-        {
-            if(e[i][j]==1) {
-                if (Date.parse(tasks[i].start) < Date.parse(tasks[j].end)) {
-                     let duration = date_utils.diff(date_utils.parse(tasks[j].start), date_utils.parse(tasks[j].end), 'hour');
-                    tasks[j].end = date_utils.to_string(date_utils.add(date_utils.parse(tasks[i].start), -1, 'hour'));
-                    tasks[j].start  = date_utils.to_string(date_utils.add(date_utils.parse(tasks[j].end), duration, 'hour'));
-                                    i=0,j=0;
-                }
-            }
-        }
-    }
-    //longest path
-    let S = [],L=[], e_tmp = [];
-    for(let i = 0; i < tasks.length; i++) {
-        e_tmp[i] = [];
-        for(let j = 0; j < tasks.length; j++) {
-            e_tmp[i][j] = e[i][j];
-        }
-    }
-    for(let i=0;i<tasks.length;i++)
-    {
-            let is_empty = true;
-            for(let j=0;j<tasks.length;j++)
-                if(e_tmp[j][i] == 1)
-                {
-                    is_empty = false;
-                    break;
-                }
-            if(is_empty)
-                S.push(i);
-
-    }
-    while(S.length>=1)
-    {
-        let n = S.pop();
-        L.push(tasks[n]);
-        for(let i=0; i<tasks.length;i++ )
-        {
-            if(e_tmp[n][i]==1)
-            {
-                e_tmp[n][i]=0;
-                let is_empty =true;
-                for(let j=0;j<tasks.length;j++)
-                    if(e_tmp[j][i]==1)
-                    {
-                        is_empty = false;
-                        break;
-                    }
-                if(is_empty)
-                    S.push(i);
-            }
-        }
-    }
-    //remap!!!!!!!!!!!!!
-
-
-        for(let i=0;i<tasks.length;i++)
-        if (typeof L[i].id === 'string' || !L[i].id) {
-        let dd=[];
-        if (L[i].id) {
-            dd = L[i].id
-                .split(',')
-                .map(d => d.trim())
-                .filter(d => d);
-        }
-        id_map[parseInt(dd[0][5])]=i;
-    }
-
-    //remap dependencies!!!
-
-    var e=makeArray(tasks.length,tasks.length,0);
-    for(let i=0;i<tasks.length;i++)
-    {
-
-        for(let d of L[i].dependencies)
-        {
-            let idx = parseInt(d[5], 10);
-            e[i][id_map[idx]]=1;
-        }
-    }
-
-    var node_late = [], maxl;
-    for(let i =0;i<tasks.length;i++)
-    {
-        node_late[i] = L[i].duration;
-    }
-    for(let i =0;i<tasks.length;i++)
-    {
-        var subtask = [];
-        for(let j=0; j<tasks.length;j++)
-            if(e[j][i] == 1)
-            {
-                subtask.push(j);
-            }
-        var max_sub;
-        if(subtask.length!=0)
-            max_sub = node_late[subtask[0]];
-        for(let j=0;j<subtask.length;j++)
-            if(node_late[subtask[j]]>max_sub) max_sub=node_late[subtask[j]];
-        if(subtask.length!=0) {
-            node_late[i] = node_late[i] + max_sub+24;
-        }
-    }
-    maxl =L[0].duration;
-    for(let i =0;i<tasks.length;i++)
-        if(node_late[i]>maxl)
-            maxl = node_late[i];
-    var node_early =[];
-    for(let i =0;i<tasks.length;i++)
-    {
-        node_early[i] = L[i].duration;
-    }
-    for(let i =tasks.length-1;i>=0;i--)
-    {
-        var subtask = [];
-        for(let j=0; j<tasks.length;j++)
-            if(e[i][j] == 1)
-            {
-                subtask.push(j);
-            }
-        var max_sub;
-        if(subtask.length!=0)
-            max_sub = node_early[subtask[0]];
-        for(let j=0;j<subtask.length;j++)
-            if(node_early[subtask[j]]>max_sub) max_sub=node_early[subtask[j]];
-        if(subtask.length!=0){
-            node_early[i]=node_early[i]+max_sub+24;
-        }
-    }
-    var ddl = date_utils.now()// todo
-    var early = [], late= [],slack=[];
-    for(let i=0;i<tasks.length;i++)
-    {
-        late[i] = date_utils.add(ddl, -1*node_late[i], 'hour');
-        early[i] = date_utils.add(ddl, -1*(maxl - node_early[i]+L[i].duration),'hour');
-        slack = early[i];
-        if(ifSlack)
-            slack = date_utils.add(early[i], date_utils.diff(late[i], early[i])/2, 'hour');
-        L[i].start = slack;
-        console.log(L[i].name);
-        console.log(date_utils.diff(late[i], early[i])/2/24*24);
-        // console.log(late[i]);
-        L[i].end = date_utils.add(L[i].start,L[i].duration, 'hour');
-        // console.log(L[i].end);
-        L[i].start = date_utils.to_string(L[i].start);
-        L[i].end = date_utils.to_string(L[i].end);
-
-    }
-    L.sort(function(a, b){return (Date.parse(a.start) == Date.parse(b.start)?a.name[0] < b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
-    return L;
 }
