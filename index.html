@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Alfred</title>
+		<style>
+			body {
+				font-family: sans-serif;
+				background: #ccc;
+			}
+			/* .container {
+				width: 80%;
+				margin: 0 auto;
+			} */
+			/* custom class */
+			.gantt .bar-milestone .bar {
+				fill: tomato;
+			}
+		</style>
+		
+		<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="index.css">
+		<link rel="stylesheet" href="frappe-gantt.css" />
+		<link rel="stylesheet" href="chat_window.css">
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script src="frappe-gantt.js"></script>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+		<script src="task-manage.js"></script>
+
+		<script type="text/javascript" src="chat_window.js"></script>
+
+	</head>
+
+
+	<body>
+
+		<h1>ALFRED</h1>
+		
+		<div class="container">
+			
+			<div class="chat_window">
+				
+				<!-- Top Menu -->
+				<div class="top_menu">
+					<div class="title">
+						Room #6324
+					</div>
+				</div>
+
+				<!--Chat Content-->
+				<ul class="messages">
+				<li class="message left appeared">
+					<div class="avatar"></div>
+					<div class="text_wrapper">
+						<div class="text">Hi, how can I help you?</div>
+					</div>
+				</li>
+				</ul>
+		
+		
+				<div class="bottom_wrapper clearfix">
+					<div class="message_input_wrapper">
+						<input type="text" name= "message" class="message_input" placeholder="Type your message here..." onfocus="this.placeholder='Aa'" onfocusout="this.placeholder='Type your message here...'">
+					</div>
+					<div class="send_message" >
+						<div class="icon"></div>
+						<div class="text"></div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="message_template">
+				<li class="message">
+					<div class="avatar"></div>
+					<div class="text_wrapper">
+						<div class="text"></div>
+					</div>
+				</li>
+			</div>
+
+			<div class="gantt-target"></div>
+		</div>
+
+		<script>
+			// setInterval(_ => {
+			// 	sendMessage("Hi I am lsl", "lsl.png", "right");
+			// }, 1000);	
+		</script>
+
+		<script>
+			var tasks = [
+				{
+					start: '2018-10-01',
+					end: '2018-10-08',
+					name: 'Redesign website',
+					id: "Task 0",
+					progress: 20
+				},
+				{
+					start: '2018-10-03',
+					end: '2018-10-06',
+					name: 'Write new content',
+					id: "Task 1",
+					progress: 5,
+				},
+				{
+					start: '2018-10-04',
+					end: '2018-10-08',
+					name: 'Apply new styles',
+					id: "Task 2",
+					progress: 10,
+				},
+				{
+					start: '2018-10-08',
+					end: '2018-10-09',
+					name: 'Review',
+					id: "Task 3",
+					progress: 5,
+				},
+				{
+					start: '2018-10-12',
+					end: '2018-10-12',
+					name: 'Deploy',
+					id: "Task 4",
+					progress: 10,
+				},
+				{
+					start: '2018-10-11',
+					end: '2018-10-11',
+					name: 'Go Live!',
+					id: "Task 5",
+					progress: 20,
+					custom_class: 'bar-milestone'
+				},
+			];
+
+			var tasks_roll = [
+				{
+					start: '2018-10-13',
+					end: '2018-10-13',
+					name: 'Dead line',
+					id: "Task 6",
+					progress: 30,
+					custom_class: 'bar-milestone'
+				}
+			];
+
+			var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
+				on_click: function (task) {
+					console.log(task);
+				},
+				on_date_change: function(task, start, end) {
+					console.log(task, start, end);
+				},
+				on_progress_change: function(task, progress) {
+					console.log(task, progress);
+				},
+				on_view_change: function(mode) {
+					console.log(mode);
+				}
+			});
+			console.log(gantt_chart);
+			function myFunction() {
+				tasks_roll.push(tasks.pop());
+				tasks_roll = arrangeTask(tasks_roll);
+				gantt_chart.refresh(tasks_roll);
+			}
+			// delete gantt_chart;
+		</script>
+		<button onclick="myFunction()">Add task</button>
+	</body>
+</html>
