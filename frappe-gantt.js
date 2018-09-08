@@ -468,13 +468,26 @@ var Gantt = (function () {
         }
         draw_avatar(){
           if (this.invalid) return;
+          let avatar_name;
+          if(this.task.actor===0)
+              avatar_name = "sgy.png";
+          else if(this.task.actor==="Jason")
+                  avatar_name = "zjh.png";
+          else if(this.task.actor==="Emily")
+                  avatar_name = "rjw.png";
+          else if(this.task.actor===3)
+                  avatar_name = "sgy.png";
+          else if(this.task.actor===4)
+              avatar_name = "lsl.png";
+          else if(this.task.actor===5)
+              avatar_name = "hzl.png";
           this.$avatar = createSVG('image', {
               x: this.x,
               y: this.y,
               width: this.height*2,
               height: this.height,
               class: 'bar-avatar',
-              href: "robot.png",
+              href: avatar_name,
               append_to: this.bar_group
           });
           // animateSVG(this.$avatar, 'width', 0, this.height);
@@ -1047,7 +1060,7 @@ var Gantt = (function () {
                 // convert to Date objects
                 task._start = date_utils.parse(task.start);
                 task._end = date_utils.parse(task.end);
-    
+                task._actor = tasks.actor;
                 // make task invalid if duration too large
                 if (date_utils.diff(task._end, task._start, 'year') > 10) {
                     task.end = null;

@@ -212,66 +212,67 @@
 				gantt_chart.refresh(tasks_roll);
 			}
 		</script> -->
-
+		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 
 		<script>
-			var tasks = [
-				{
-					start: '2018-10-01',
-					end: '2018-10-08',
-					name: 'Redesign website',
-					id: "Task 0",
-					progress: 20
-				},
-				{
-					start: '2018-10-03',
-					end: '2018-10-06',
-					name: 'Write new content',
-					id: "Task 1",
-					progress: 5,
-				},
-				{
-					start: '2018-10-04',
-					end: '2018-10-08',
-					name: 'Apply new styles',
-					id: "Task 2",
-					dependencies:"Task 6",
-					progress: 10,
-				},
-				{
-					start: '2018-10-08',
-					end: '2018-10-09',
-					name: 'Review',
-					id: "Task 3",
-					dependencies:"Task 5, Task 6",
-					progress: 5,
-				},
-				{
-					start: '2018-10-12',
-					end: '2018-10-12',
-					name: 'Deploy',
-					id: "Task 4",
-					progress: 10,
-				},
-				{
-					start: '2018-10-11',
-					end: '2018-10-12',
-					name: 'Go Live!',
-					id: "Task 5",
-					dependencies:'Task 6',
-					progress: 20,
-					custom_class: 'bar-milestone'
-				},
-			]
-			var tasks_roll = [			{
-							start: '2018-10-13',
-							end: '2018-10-16',
-							name: 'Dead line',
-							id: "Task 6",
-							progress: 30,
-							custom_class: 'bar-milestone'
-						},];
+				// Initialize Firebase
+				var config = {
+					apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
+					authDomain: "alfred-6f93d.firebaseapp.com",
+					databaseURL: "https://alfred-6f93d.firebaseio.com",
+					projectId: "alfred-6f93d",
+					storageBucket: "alfred-6f93d.appspot.com",
+					messagingSenderId: "639939505186"
+				};
+			firebase.initializeApp(config);
 
+			let database = firebase.database();
+
+			let ref = database.ref("/");
+
+			ref.on("value", snapShot => {
+			    		let res;
+			res = snapShot.val();
+			var ifSlack = false;
+			let tasks_roll=[{
+			        	actor: 0,
+						duration: 0,
+						name: 'ddl',
+						isddl:1,
+						start:date_utils.now(),
+						end: date_utils.now(),
+						id: 'Task 0',
+						custom_class: 'bar-milestone',
+				},];
+			for(let task_name in res.events)
+				{
+				    if(task_name==="sentences")
+				        continue;
+				    if(task_name==="eventDate") {
+				        tasks_roll[0].start = date_utils.parse(res.events[task_name]);
+                        tasks_roll[0].end = date_utils.parse(res.events[task_name]);
+                        continue;
+                    }
+				    if(task_name==="eventName") {
+                        tasks_roll[0].name = res.events[task_name];
+                        continue;
+                    }
+                    let in_task = res.events[task_name];
+                    let new_task=[{
+                        isddl:0,
+				        duration:in_task.duration,
+				        name: in_task.action,
+						actor: in_task.actor,
+						id: 'Task '+Math.random().toString(36).slice(2, 9),
+					},];
+                    tasks_roll.push(new_task[0]);
+					// console.log(new_task);
+					// console.log(res.events);
+                }
+
+
+
+                tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
 			var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
 				on_click: function (task) {
 					console.log(task);
@@ -286,10 +287,103 @@
 					console.log(mode);
 				}
 			});
-			console.log(gantt_chart);
+			// console.log(gantt_chart);
+
+
+            });
+
+			let userId2Avatar = new Map();
+			let avatarsForChatWindow = ["lsl.png", "sgy.png", "zjh.png", "hzl.png", "rjw.png"];
+			let avatarPtr = -1;
+
+			let sent_ref = database.ref("/events/sentences");
+			sent_ref.on("child_added", snapShot => {
+
+			    if (avatarPtr >= 4) {
+			        console.error("user id is illegal");
+					return;
+				}
+
+				let newSentence = snapShot.val();
+
+				let userId = newSentence.userId;
+				if (userId2Avatar.has(userId)) {
+
+				} else {
+				    avatarPtr++;
+				    userId2Avatar.set(userId, avatarsForChatWindow[avatarPtr]);
+				}
+
+				console.log(userId);
+				console.log(userId2Avatar);
+				console.log(avatarPtr);
+
+			    sendMessage(newSentence.content, userId2Avatar.get(userId), "right");
+			});
+
+
+			// var tasks = [
+			// 	{
+			// 	    duration:6,
+			// 		actor:1,
+			// 		name: 'Redesign website',
+			// 		id: "Task 0",
+			// 		progress: 20
+			// 	},
+			// 	{
+			// 		duration:2,
+			// 		actor:2,
+			// 		name: 'Write new content',
+			// 		id: "Task 1",
+			// 		progress: 5,
+			// 	},
+			// 	{
+			// 		duration:1,
+			// 		actor:3,
+			// 		name: 'Apply new styles',
+			// 		id: "Task 2",
+			// 		dependencies:"Task 6",
+			// 		progress: 10,
+			// 	},
+			// 	{
+			// 		duration:1,
+			// 		actor:4,
+			// 		name: 'Review',
+			// 		id: "Task 3",
+			// 		dependencies:"Task 5, Task 6",
+			// 		progress: 5,
+			// 	},
+			// 	{
+			// 		duration:2,
+			// 		actor:5,
+			// 		name: 'Deploy',
+			// 		id: "Task 4",
+			// 		progress: 10,
+			// 	},
+			// 	{
+			// 		duration:4,
+			// 		actor:1,
+			// 		name: 'Go Live!',
+			// 		id: "Task 5",
+			// 		progress: 20,
+			// 		custom_class: 'bar-milestone'
+			// 	},
+			// ]
+			// var tasks_roll = [			{
+			// 				start: '2018-10-16',
+			// 				end: '2018-10-16',
+			// 				actor:0,
+			// 				duration: 0,
+			// 				name: 'Dead line',
+			// 				id: "Task 6",
+			// 				progress: 30,
+			// 				custom_class: 'bar-milestone'
+			// 			},];
+			// console.log(tasks_roll.length);
+
 			var ifSlack = false;
 			function myFunction() {
-				tasks_roll.push(tasks.pop());
+				// tasks_roll.push(tasks.pop());
 				tasks_roll = arrangeTask(tasks_roll,ifSlack);
 				gantt_chart.refresh(tasks_roll);
 			}
@@ -298,7 +392,7 @@
 				tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
 				gantt_chart.refresh(tasks_roll);}
 		</script>
-		
+
 		<button onclick="myFunction()">Add task</button>
 		<button onclick="myFunction2()">Slack!</button>
 
@@ -334,26 +428,6 @@
 			
 		 </script>
 
-		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
-		<script>
-			// Initialize Firebase
-			var config = {
-				apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
-				authDomain: "alfred-6f93d.firebaseapp.com",
-				databaseURL: "https://alfred-6f93d.firebaseio.com",
-				projectId: "alfred-6f93d",
-				storageBucket: "alfred-6f93d.appspot.com",
-				messagingSenderId: "639939505186"
-			};
-			firebase.initializeApp(config);
 
-			let database = firebase.database();
-
-			let ref = database.ref("/");
-
-			ref.on("value", snapShot => {
-				console.log(snapShot.val());
-			});
-		</script>
 	</body>
 </html>
