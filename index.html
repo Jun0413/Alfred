@@ -7,7 +7,7 @@
 		<style>
 			body {
 				font-family: sans-serif;
-				background: #ccc;
+				background: #cccccc;
 			}
 			/* .container {
 				width: 80%;
@@ -23,32 +23,39 @@
 		<link rel="stylesheet" href="index.css">
 		<link rel="stylesheet" href="frappe-gantt.css" />
 		<link rel="stylesheet" href="chat_window.css">
+		<link rel="stylesheet" href="batman-font-kit/stylesheet.css">
+		<!-- <link rel="stylesheet" href="notification.css"> -->
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
+		<script src="task-manage.js"></script>
 		<script src="frappe-gantt.js"></script>
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-		<script src="task-manage.js"></script>
+		
 
 		<script type="text/javascript" src="chat_window.js"></script>
+		<script type="text/javascript" src="planner_list.js"></script>
 
 	</head>
 
 
 	<body>
 
-		<h1>ALFRED</h1>
-		
 		<div class="container">
+
+			<header>
+				<h1 id="banner_title"><img src="raw_resources/alfred_head_mod_edeff2.jpg" id="banner_icon">ALFRED</h1>
+			</header>
 			
 			<div class="chat_window">
 				
 				<!-- Top Menu -->
 				<div class="top_menu">
 					<div class="title">
-						Room #6324
+						<input id="collap" class="collp_toggle" type="checkbox">
+						<label for="collap" class="collp_lbl_toggle" >Room #6324</label>
 					</div>
 				</div>
 
@@ -61,9 +68,9 @@
 					</div>
 				</li>
 				</ul>
-		
-		
-				<div class="bottom_wrapper clearfix">
+				
+				<!-- clearfix -->
+				<div class="bottom_wrapper">
 					<div class="message_input_wrapper">
 						<input type="text" name= "message" class="message_input" placeholder="Type your message here..." onfocus="this.placeholder='Aa'" onfocusout="this.placeholder='Type your message here...'">
 					</div>
@@ -84,15 +91,49 @@
 			</div>
 
 			<div class="gantt-target"></div>
+
+			<!-- <button onclick="myFunction()">Add task</button> -->
+
+			<div class="planner_list">
+				<h1>Birthday Party Plan</h1>
+
+				<!-- <button id="fadein"></button> -->
+				<!-- <script>
+					$(document).ready(function(){
+						$("#fadein").click(function(){
+							$("#img1").fadeIn(2000);
+						});
+					});
+				</script> -->
+
+				<ul>
+					<!-- <li>
+						<img src="sgy.png">
+					</li>
+					<li>
+						<img src="hzl.png">
+					</li>
+					<li>
+						<img src="zjh.png">
+					</li>
+					<li>
+						<img src="rjw.png">
+					</li>
+					<li>
+						<img src="lsl.png">
+					</li> -->
+				</ul>
+			</div>
+
+			<div class="planner_template">
+				<li>
+					<img>
+				</li>
+			</div>
+
 		</div>
 
-		<script>
-			// setInterval(_ => {
-			// 	sendMessage("Hi I am lsl", "lsl.png", "right");
-			// }, 1000);	
-		</script>
-
-		<script>
+		<!-- <script>
 			var tasks = [
 				{
 					start: '2018-10-01',
@@ -170,8 +211,149 @@
 				tasks_roll = arrangeTask(tasks_roll);
 				gantt_chart.refresh(tasks_roll);
 			}
-			// delete gantt_chart;
+		</script> -->
+
+
+		<script>
+			var tasks = [
+				{
+					start: '2018-10-01',
+					end: '2018-10-08',
+					name: 'Redesign website',
+					id: "Task 0",
+					progress: 20
+				},
+				{
+					start: '2018-10-03',
+					end: '2018-10-06',
+					name: 'Write new content',
+					id: "Task 1",
+					progress: 5,
+				},
+				{
+					start: '2018-10-04',
+					end: '2018-10-08',
+					name: 'Apply new styles',
+					id: "Task 2",
+					dependencies:"Task 6",
+					progress: 10,
+				},
+				{
+					start: '2018-10-08',
+					end: '2018-10-09',
+					name: 'Review',
+					id: "Task 3",
+					dependencies:"Task 5, Task 6",
+					progress: 5,
+				},
+				{
+					start: '2018-10-12',
+					end: '2018-10-12',
+					name: 'Deploy',
+					id: "Task 4",
+					progress: 10,
+				},
+				{
+					start: '2018-10-11',
+					end: '2018-10-12',
+					name: 'Go Live!',
+					id: "Task 5",
+					dependencies:'Task 6',
+					progress: 20,
+					custom_class: 'bar-milestone'
+				},
+			]
+			var tasks_roll = [			{
+							start: '2018-10-13',
+							end: '2018-10-16',
+							name: 'Dead line',
+							id: "Task 6",
+							progress: 30,
+							custom_class: 'bar-milestone'
+						},];
+
+			var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
+				on_click: function (task) {
+					console.log(task);
+				},
+				on_date_change: function(task, start, end) {
+					console.log(task, start, end);
+				},
+				on_progress_change: function(task, progress) {
+					console.log(task, progress);
+				},
+				on_view_change: function(mode) {
+					console.log(mode);
+				}
+			});
+			console.log(gantt_chart);
+			var ifSlack = false;
+			function myFunction() {
+				tasks_roll.push(tasks.pop());
+				tasks_roll = arrangeTask(tasks_roll,ifSlack);
+				gantt_chart.refresh(tasks_roll);
+			}
+
+			function myFunction2() {
+				tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
+				gantt_chart.refresh(tasks_roll);}
 		</script>
+		
 		<button onclick="myFunction()">Add task</button>
+		<button onclick="myFunction2()">Slack!</button>
+
+		<script>
+
+			// setInterval(_ => {
+			// 	sendMessage("Hi I am hzl", "hzl.png", "right");
+			// }, 1000);
+
+			// setTimeout(_ => {
+			// 	newPlanner("rjw", "rjw.png");
+			// }, 1000);
+			// setTimeout(_ => {
+			// 	removePlanner('rjw');
+			// }, 5000);
+
+
+			/**
+			 * sgy -> hzl -> zjh -> rjw -> lsl 
+			 * hzl -> zjh -> rjw -> lsl
+			 * hzl -> lsl
+			 */
+			newPlanner("sgy", "sgy.png");
+			newPlanner("hzl", "hzl.png");
+			newPlanner("zjh", "zjh.png");
+			newPlanner("rjw", "rjw.png");
+			newPlanner("lsl", "lsl.png");
+			removePlanner("sgy");
+			removePlanner('zjh');
+			removePlanner('rjw');
+
+
+			
+		 </script>
+
+		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
+				authDomain: "alfred-6f93d.firebaseapp.com",
+				databaseURL: "https://alfred-6f93d.firebaseio.com",
+				projectId: "alfred-6f93d",
+				storageBucket: "alfred-6f93d.appspot.com",
+				messagingSenderId: "639939505186"
+			};
+			firebase.initializeApp(config);
+
+			let database = firebase.database();
+
+			let ref = database.ref("/");
+
+			ref.on("value", snapShot => {
+				console.log(snapShot.val());
+			});
+		</script>
 	</body>
 </html>
