@@ -1,0 +1,82 @@
+section{
+    float: top;
+	width: 100vw;
+	overflow: hidden;
+    height: 25vh;
+	background: #ecf0f1;
+	border-bottom: 1px solid #95a5a6;
+}
+.notification{
+	width: 60vw;
+	height: 40px;
+	border-radius: 0px 0px 5px 5px;
+	margin: 0 auto;
+	box-shadow: #95a5a6 0px 0px 6px 2px;
+	color: white;
+	line-height: 40px;
+	overflow: hidden;
+	animation: reveal 1 2s;
+}
+.notification .title{
+	margin-right: 15px;
+	padding: 0px 15px;
+	line-height: 40px;
+	display: inline-block;
+}
+
+.notification .close{
+	background: rgba(255,255,255,0.2);
+	padding: 0px 15px;
+	float: right;
+	line-height: 40px;
+	display: inline-block;
+	color: white;
+}
+.notification .close:hover{
+  cursor: pointer;
+}
+.notification.closed{
+	transform: translate(0px, -50px);
+	transition: 0.7s;
+}
+
+@keyframes reveal{
+	0%{
+		transform: translate(0px, -50px);
+	}
+	50%{
+		transform: translate(0px, -50px);
+	}
+	100%{
+		transform: translate(0px, 0px);
+	}
+}
+
+
+.notification.success{
+	background: #2ecc71;
+}
+.notification.success .title{
+	background: #27ae60;
+}
+
+.notification.error{
+	background: #e74c3c;
+}
+.notification.error .title{
+	background: #c0392b;
+}
+
+.notification.warning{
+	background: #f1c40f;
+}
+.notification.warning .title{
+	background: #f39c12;
+}
+
+.notification.normal{
+	background: #3498db;
+}
+.notification.normal .title{
+	background: #2980b9;
+}

@@ -1,0 +1,32 @@
+{
+  "events" : {
+    "cake_ordering" : {
+      "action" : "order cake",
+      "actor" : [ "Rick" ],
+      "duration" : 1,
+      "priority" : 1,
+      "start_date" : "2018-08-15"
+    },
+    "cake_taking" : {
+      "action" : "take cake",
+      "actor" : [ "Jason" ],
+      "duration" : 1,
+      "priority" : 0,
+      "start_date" : "2018-08-19"
+    },
+    "venue_booking" : {
+      "action" : "book venue",
+      "actor" : [ "Rick", "Jason" ],
+      "duration" : 2,
+      "priority" : 1,
+      "start_date" : "2018-08-16"
+    },
+    "venue_decorating" : {
+      "action" : "decorate venue",
+      "actor" : [ "Rose", "Amy" ],
+      "duration" : 2,
+      "priority" : 0,
+      "start_date" : "2018-08-18"
+    }
+  }
+}
