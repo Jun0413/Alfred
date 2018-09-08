@@ -43,6 +43,8 @@
 
 	<body>
 
+		<script src="conversation_manager.js"></script>
+
 		<div class="container">
 
 			<header>
@@ -74,7 +76,7 @@
 					<div class="message_input_wrapper">
 						<input type="text" name= "message" class="message_input" placeholder="Type your message here..." onfocus="this.placeholder='Aa'" onfocusout="this.placeholder='Type your message here...'">
 					</div>
-					<div class="send_message" >
+					<div class="send_message" onclick="sendMessage('test', 'rjw.png');">
 						<div class="icon"></div>
 						<div class="text"></div>
 					</div>
@@ -424,10 +426,7 @@
 			removePlanner('zjh');
 			removePlanner('rjw');
 
-
 			
 		 </script>
-
-
 	</body>
 </html>
