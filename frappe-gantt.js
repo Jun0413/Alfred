@@ -1389,6 +1389,22 @@ var Gantt = (function () {
                     class: 'today-highlight',
                     append_to: this.layers.grid
                 });
+                // //todo
+                // const xx = date_utils.diff(date_utils.parse(this.tasks[0].end), this.gantt_start, 'hour') /
+                //     this.options.step *
+                //     this.options.column_width;
+                // console.log(date_utils.parse(this.tasks[0].end));
+                // console.log(date_utils.today());
+                // console.log(x);
+                // console.log(xx);
+                // createSVG('rect', {
+                //     x,
+                //     y,
+                //     width,
+                //     height,
+                //     class: 'ddl-highlight',
+                //     append_to: this.layers.grid
+                // });
             }
         }
     

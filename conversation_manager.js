@@ -4,7 +4,7 @@ let sentences = [];
 
 let lastTime;
 let maxTime;
-
+/*
 window.fbAsyncInit = function() {
     FB.init({
         appId            : '1291295337679065',
@@ -93,4 +93,4 @@ if (d.getElementById(id)) {return;}
 js = d.createElement(s); js.id = id;
 js.src = "https://connect.facebook.net/en_US/sdk.js";
 fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+}(document, 'script', 'facebook-jssdk'));*/

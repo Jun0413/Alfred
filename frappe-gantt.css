@@ -25,6 +25,10 @@
   fill: #fcf8e3;
   opacity: 0.5; }
 
+.gantt .ddl-highlight {
+  fill: #000000;
+  opacity: 0.5; }
+
 .gantt .arrow {
   fill: none;
   stroke: #666;

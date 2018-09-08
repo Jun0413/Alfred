@@ -50,9 +50,9 @@
 			<header>
 				<h1 id="banner_title"><img src="raw_resources/alfred_head_mod_edeff2.jpg" id="banner_icon">ALFRED</h1>
 			</header>
-			
+
 			<div class="chat_window">
-				
+
 				<!-- Top Menu -->
 				<div class="top_menu">
 					<div class="title">
@@ -70,7 +70,7 @@
 					</div>
 				</li>
 				</ul>
-				
+
 				<!-- clearfix -->
 				<div class="bottom_wrapper">
 					<div class="message_input_wrapper">
@@ -82,7 +82,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="message_template">
 				<li class="message">
 					<div class="avatar"></div>
@@ -97,7 +97,7 @@
 			<!-- <button onclick="myFunction()">Add task</button> -->
 
 			<div class="planner_list">
-				<h1>Birthday Party Plan</h1>
+				<h1 id="planner_list_title">Birthday Party Plan 🎉 🎉 🎉 </h1>
 
 				<!-- <button id="fadein"></button> -->
 				<!-- <script>
@@ -217,6 +217,13 @@
 		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 
 		<script>
+		  function playSound(filename){
+		      console.log("played!!!");
+			var mp3Source = '<source src="' + filename + '.mp3" type="audio/mpeg">';
+			var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
+			var embedSource = '<embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3">';
+			document.getElementById("sound").innerHTML='<audio autoplay="autoplay">' + mp3Source + oggSource + embedSource + '</audio>';
+		  }
 				// Initialize Firebase
 				var config = {
 					apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
@@ -233,64 +240,73 @@
 			let ref = database.ref("/");
 
 			ref.on("value", snapShot => {
+			    playSound('quite-impressed');
 			    		let res;
-			res = snapShot.val();
-			var ifSlack = false;
-			let tasks_roll=[{
-			        	actor: 0,
-						duration: 0,
-						name: 'ddl',
-						isddl:1,
-						start:date_utils.now(),
-						end: date_utils.now(),
-						id: 'Task 0',
-						custom_class: 'bar-milestone',
-				},];
-			for(let task_name in res.events)
-				{
-				    if(task_name==="sentences")
-				        continue;
-				    if(task_name==="eventDate") {
-				        tasks_roll[0].start = date_utils.parse(res.events[task_name]);
-                        tasks_roll[0].end = date_utils.parse(res.events[task_name]);
-                        continue;
-                    }
-				    if(task_name==="eventName") {
-                        tasks_roll[0].name = res.events[task_name];
-                        continue;
-                    }
-                    let in_task = res.events[task_name];
-                    let new_task=[{
-                        isddl:0,
-				        duration:in_task.duration,
-				        name: in_task.action,
-						actor: in_task.actor,
-						id: 'Task '+Math.random().toString(36).slice(2, 9),
+				res = snapShot.val();
+				var ifSlack = false;
+				let tasks_roll=[{
+							actor: 0,
+							duration: 0,
+							name: 'ddl',
+							isddl:1,
+							start:date_utils.now(),
+							end: date_utils.now(),
+							id: 'Task 0',
+							custom_class: 'bar-milestone',
 					},];
-                    tasks_roll.push(new_task[0]);
-					// console.log(new_task);
-					// console.log(res.events);
-                }
+				console.log(res.events);
+				for(let task_name in res.events)
+					{
+						if(task_name==="sentences")
+							continue;
+						if(task_name==="eventDate") {
+							tasks_roll[0].start = date_utils.parse(res.events[task_name]);
+							tasks_roll[0].end = date_utils.parse(res.events[task_name]);
+							continue;
+						}
+						if(task_name==="eventName") {
+							tasks_roll[0].name = (res.events[task_name].replace('_', ' ').toUpperCase()+'🙌🙌');
+							continue;
+						}
+						if(task_name === "numOfTask")
+						    continue;
+						if(task_name === "slack")
+						    continue;
+						if(task_name === "buffer")
+						    continue;
+
+						let in_task = res.events[task_name];
+						let new_name_frag = in_task.action.replace('_', ' ').split(' ');
+						let new_name = "";
+						for (frag of new_name_frag)
+							new_name += (frag.charAt(0).toUpperCase()+frag.slice(1)+' ');
+						let new_task=[{
+							isddl:0,
+							duration:in_task.duration,
+							name: new_name,
+							actor: in_task.actor,
+							id: 'Task '+Math.random().toString(36).slice(2, 9),
+						},];
+						tasks_roll.push(new_task[0]);
+					}
 
 
-
-                tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
-			var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
-				on_click: function (task) {
-					console.log(task);
-				},
-				on_date_change: function(task, start, end) {
-					console.log(task, start, end);
-				},
-				on_progress_change: function(task, progress) {
-					console.log(task, progress);
-				},
-				on_view_change: function(mode) {
-					console.log(mode);
-				}
+					tasks_roll = arrangeTask(tasks_roll,ifSlack);
+				var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
+					on_click: function (task) {
+						console.log(task);
+					},
+					on_date_change: function(task, start, end) {
+						console.log(task, start, end);
+					},
+					on_progress_change: function(task, progress) {
+						console.log(task, progress);
+					},
+					on_view_change: function(mode) {
+						console.log(mode);
+					}
 			});
 			// console.log(gantt_chart);
-
 
             });
 
@@ -315,14 +331,14 @@
 				    avatarPtr++;
 				    userId2Avatar.set(userId, avatarsForChatWindow[avatarPtr]);
 				}
-
-				console.log(userId);
-				console.log(userId2Avatar);
-				console.log(avatarPtr);
+                //
+				// console.log(userId);
+				// console.log(userId2Avatar);
+				// console.log(avatarPtr);
 
 			    sendMessage(newSentence.content, userId2Avatar.get(userId), "right");
 			});
-
+			console.log(date_utils.now());
 
 			// var tasks = [
 			// 	{
@@ -382,21 +398,21 @@
 			// 				custom_class: 'bar-milestone'
 			// 			},];
 			// console.log(tasks_roll.length);
-
-			var ifSlack = false;
-			function myFunction() {
-				// tasks_roll.push(tasks.pop());
-				tasks_roll = arrangeTask(tasks_roll,ifSlack);
-				gantt_chart.refresh(tasks_roll);
-			}
-
-			function myFunction2() {
-				tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
-				gantt_chart.refresh(tasks_roll);}
+            //
+			// var ifSlack = false;
+			// function myFunction() {
+			// 	// tasks_roll.push(tasks.pop());
+			// 	tasks_roll = arrangeTask(tasks_roll,ifSlack);
+			// 	gantt_chart.refresh(tasks_roll);
+			// }
+            //
+			// function myFunction2() {
+			// 	tasks_roll = arrangeTask(tasks_roll,true);
+			// 	gantt_chart.refresh(tasks_roll);}
 		</script>
 
-		<button onclick="myFunction()">Add task</button>
-		<button onclick="myFunction2()">Slack!</button>
+		<!--<button onclick="myFunction()">Add task</button>-->
+		<!--<button onclick="myFunction2()">Slack!</button>-->
 
 		<script>
 
@@ -413,7 +429,7 @@
 
 
 			/**
-			 * sgy -> hzl -> zjh -> rjw -> lsl 
+			 * sgy -> hzl -> zjh -> rjw -> lsl
 			 * hzl -> zjh -> rjw -> lsl
 			 * hzl -> lsl
 			 */
@@ -422,11 +438,16 @@
 			newPlanner("zjh", "zjh.png");
 			newPlanner("rjw", "rjw.png");
 			newPlanner("lsl", "lsl.png");
-			removePlanner("sgy");
-			removePlanner('zjh');
-			removePlanner('rjw');
+			// removePlanner("sgy");
+			// removePlanner('zjh');
+			// removePlanner('rjw');
 
-			
+
+
+
 		 </script>
+		<div id="sound"></div>
+	<button onclick="playSound('quite-impressed');">Play</button>
+
 	</body>
 </html>
