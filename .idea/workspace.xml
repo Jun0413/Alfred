@@ -2,11 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fb13358-53b5-45e0-8697-646bf39c589d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frappe-gantt.css" beforeDir="false" afterPath="$PROJECT_DIR$/frappe-gantt.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frappe-gantt.js" beforeDir="false" afterPath="$PROJECT_DIR$/frappe-gantt.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/alfred_out.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/draw_bath.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/say_draw_bath.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/shake_head.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/sum_total.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/raw_resources/too_old2care.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wave.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat_window.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat_window.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat_window.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat_window.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task-manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/task-manage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planner_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/planner_list.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,8 +54,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-90">
-              <caret line="289" column="74" selection-start-line="289" selection-start-column="74" selection-end-line="289" selection-end-column="74" />
+            <state relative-caret-position="284">
+              <caret line="403" column="9" selection-start-line="403" selection-start-column="9" selection-end-line="403" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -91,7 +98,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>duration</find>
       <find>draw_bar</find>
       <find>actor</find>
       <find>class bar</find>
@@ -121,6 +127,7 @@
       <find>handle</find>
       <find>console</find>
       <find>make</find>
+      <find>&lt;&lt;&lt;&lt;&lt;</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -487,8 +494,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
-          <caret line="289" column="74" selection-start-line="289" selection-start-column="74" selection-end-line="289" selection-end-column="74" />
+        <state relative-caret-position="284">
+          <caret line="403" column="9" selection-start-line="403" selection-start-column="9" selection-end-line="403" selection-end-column="9" />
         </state>
       </provider>
     </entry>

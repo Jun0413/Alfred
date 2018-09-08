@@ -1,0 +1,45 @@
+.wave_template {
+  display: none;
+}
+  .wave {
+    width: 24px;
+    height: 24px;
+    margin: 0.5em auto;
+  }
+  
+  .wave_frame {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    cursor:pointer;
+  }
+  
+  .water {
+    background: #3F68C5;
+    position: relative;
+    top: 50%;
+    height: 200%;
+    width: 200%;
+    border-radius: 38%;
+    left: -50%;
+    transform: rotate(360deg);
+    transition: all 1s ease;
+    animation: wave 5s linear infinite;
+  }
+  
+  @keyframes wave {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

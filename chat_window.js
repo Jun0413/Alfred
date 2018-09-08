@@ -16,6 +16,22 @@ Message = function (arg) {
     }(this);
 }
 
+function getMemeSize(meme_path) {
+    if (meme_path === "raw_resources/alfred_out.gif") {
+        return [120, 90];
+    } else if (meme_path === "raw_resources/draw_bath.gif") {
+        return [120, 100];
+    } else if (meme_path === "raw_resources/say_draw_bath.gif") {
+        return [120, 100];
+    } else if (meme_path === "raw_resources/too_old2care.gif") {
+        return [120, 100];
+    } else if (meme_path === "raw_resources/shake_head.gif") {
+        return [120, 100];
+    } else if (meme_path === "raw_resources/sum_total.gif") {
+        return [120, 110];
+    }
+}
+
 function sendMessage(text, avatar_path, side="left") {
 
     if (text.trim() === '') {
@@ -42,6 +58,28 @@ function sendMessage(text, avatar_path, side="left") {
         avatar_path: avatar_path
     });
     message.draw();
+    return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
+}
+
+function sendMeme(meme_path) {
+
+    console.log("[sendMeme]");
+
+    let size = getMemeSize(meme_path);
+    let style = `style='width:${size[0]}px;height:${size[1]}px'`;
+    let avatar_path = "raw_resources/alfred_head_mod_2e6f85.jpg";
+
+    var $message;
+    $message = $($('.message_template').clone().html());
+
+    $message.addClass("right").find('.text').append(`<img src=${meme_path} ${style}>`);
+    $message.find('.avatar').css('background-image', 'url(\"'+avatar_path+'\")');
+    $('.messages').append($message);
+    setTimeout(function () {
+        return $message.addClass('appeared');
+    }, 0);
+
+    $messages = $('.messages');
     return $messages.animate({ scrollTop: $messages.prop('scrollHeight') }, 300);
 }
 
