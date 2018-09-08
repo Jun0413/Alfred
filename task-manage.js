@@ -436,10 +436,10 @@ function arrangeTask(tasks,ifSlack) {
         early[i] = date_utils.add(ddl, -1*(maxl - node_early[i]+L[i].duration),'hour');
         slack = early[i];
         if(ifSlack)
-            slack = date_utils.add(early[i], date_utils.diff(late[i], early[i])/2, 'hour');
+            slack = date_utils.add(early[i], date_utils.diff(late[i], early[i])/2*24, 'hour');
         L[i].start = slack;
-        console.log(L[i].name);
-        console.log(date_utils.diff(late[i], early[i])/2/24*24);
+        // console.log(L[i].name);
+        // console.log(date_utils.diff(late[i], early[i])/2/24*24);
         // console.log(late[i]);
         L[i].end = date_utils.add(L[i].start,L[i].duration, 'hour');
         // console.log(L[i].end);
@@ -447,6 +447,6 @@ function arrangeTask(tasks,ifSlack) {
         L[i].end = date_utils.to_string(L[i].end);
 
     }
-    L.sort(function(a, b){return (Date.parse(a.start) == Date.parse(b.start)?a.name[0] < b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
+    L.sort(function(a, b){return (Date.parse(a.start) === Date.parse(b.start)?a.name[0] < b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
     return L;
 }
