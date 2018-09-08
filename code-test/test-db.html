@@ -1,0 +1,98 @@
+<html lang="en">
+
+ <head>
+  <meta charset="UTF-8">
+  <title>Alfred</title>
+ </head>
+
+
+ <body>
+
+  <script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+  <script>
+   function getFromDB()
+   {
+       let tasks_roll=[{
+            actor: 0,
+      duration: 0,
+      name: 'ddl',
+      start:Date.now(),
+      end: Date.now(),
+      id: 'Task 0',
+    },];
+     let ddl = Date.now();
+    let ddl_name = "dead line";
+    // Initialize Firebase
+    var config = {
+     apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
+     authDomain: "alfred-6f93d.firebaseapp.com",
+     databaseURL: "https://alfred-6f93d.firebaseio.com",
+     projectId: "alfred-6f93d",
+     storageBucket: "alfred-6f93d.appspot.com",
+     messagingSenderId: "639939505186"
+    };
+   firebase.initializeApp(config);
+
+   let database = firebase.database();
+
+   let ref = database.ref("/");
+   var res;
+
+   ref.on("value", snapShot => {
+                res = snapShot.val();
+    });
+
+    let handler = 0;
+
+    handler = setInterval(_ => {
+        if(res) {
+            console.log("doNext");
+            console.log(res);
+            clearInterval(handler);
+            handler = 0;
+        }
+    }, 1000);
+
+
+
+/*
+   for(let task_name in res.events)
+    {
+        if(task_name==="sentences")
+            continue;
+        if(task_name==="eventDate") {
+            tasks_roll[0].start = date_utils.parse(res.events[task_name]);
+                        tasks_roll[0].end = date_utils.parse(res.events[task_name]);
+                        continue;
+                    }
+        if(task_name==="eventName") {
+                        tasks_roll[0].name = res.events[task_name];
+                        continue;
+                    }
+                    let in_task = res.events[task_name];
+                    let new_task=[{
+            duration:in_task.duration,
+            name: in_task.action,
+      actor: in_task.actor,
+      id: 'Task '+Math.random().toString(36).slice(2, 9),
+     },];
+                    tasks_roll.push(new_task[0]);
+     // console.log(new_task);
+     // console.log(res.events);
+                }
+
+                   return tasks_roll;
+   // console.log(tasks_roll.length);
+   }*/
+}
+  </script>
+
+  <script>
+   var tasks_roll=getFromDB();
+//    console.log(tasks_roll.length);
+  </script>
+
+  
+
+ </body>
+</html>
