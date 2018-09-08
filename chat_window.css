@@ -74,7 +74,7 @@ body {
   color: #000000;
 }
 .messages .message.right .avatar {
-  background-image: url("human.png");
+  background-image: url("raw_resources/alfred_head_mod_2e6f85.jpg");
   background-size: contain;
   float: right;
 }
