@@ -253,6 +253,7 @@
 							end: date_utils.now(),
 							id: 'Task 0',
 							custom_class: 'bar-milestone',
+                            progress: 5,
 					},];
 				console.log(res.events);
 				for(let task_name in res.events)
@@ -286,6 +287,7 @@
 							name: new_name,
 							actor: in_task.actor,
 							id: 'Task '+Math.random().toString(36).slice(2, 9),
+                            progress: 5,
 						},];
 						tasks_roll.push(new_task[0]);
 					}
