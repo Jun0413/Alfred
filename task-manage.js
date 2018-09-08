@@ -255,8 +255,8 @@ function padStart(str, targetLength, padString) {
 
 function arrangeTask(tasks,ifSlack) {
     var ddl = date_utils.parse(tasks[0].end);// todo
-    console.log(tasks[0].end);
-    console.log(tasks[0].name);
+    // console.log(tasks[0].end);
+    // console.log(tasks[0].name);
     var id_map=[];
     var e=makeArray(tasks.length,tasks.length,0);
     //get id map

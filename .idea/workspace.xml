@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6fb13358-53b5-45e0-8697-646bf39c589d" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frappe-gantt.css" beforeDir="false" afterPath="$PROJECT_DIR$/frappe-gantt.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frappe-gantt.js" beforeDir="false" afterPath="$PROJECT_DIR$/frappe-gantt.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task-manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/task-manage.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -16,8 +20,8 @@
       <file leaf-file-name="frappe-gantt.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frappe-gantt.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="1404" column="46" lean-forward="true" selection-start-line="1404" selection-start-column="46" selection-end-line="1404" selection-end-column="46" />
+            <state relative-caret-position="599">
+              <caret line="1008" column="24" selection-start-line="1008" selection-start-column="17" selection-end-line="1008" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -25,8 +29,8 @@
       <file leaf-file-name="frappe-gantt.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/frappe-gantt.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="20" />
+            <state relative-caret-position="633">
+              <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -34,8 +38,8 @@
       <file leaf-file-name="task-manage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/task-manage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="144" column="7" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="7" />
+            <state relative-caret-position="528">
+              <caret line="260" column="4" selection-start-line="260" selection-start-column="4" selection-end-line="260" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -43,8 +47,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="733">
-              <caret line="289" column="39" lean-forward="true" selection-start-line="289" selection-start-column="39" selection-end-line="289" selection-end-column="39" />
+            <state relative-caret-position="-90">
+              <caret line="289" column="74" selection-start-line="289" selection-start-column="74" selection-end-line="289" selection-end-column="74" />
             </state>
           </provider>
         </entry>
@@ -52,8 +56,17 @@
       <file leaf-file-name="index.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
+            <state relative-caret-position="306">
               <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chat_window.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/chat_window.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -63,15 +76,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="8" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chat_window.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chat_window.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -87,8 +91,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>draw_</find>
-      <find>view</find>
       <find>duration</find>
       <find>draw_bar</find>
       <find>actor</find>
@@ -96,7 +98,6 @@
       <find>todo</find>
       <find>id</find>
       <find>database</find>
-      <find>avatar</find>
       <find>on ch</find>
       <find>date_change</find>
       <find>birthda</find>
@@ -104,7 +105,6 @@
       <find>alfred</find>
       <find>birth</find>
       <find>draw_a</find>
-      <find>console</find>
       <find>now()</find>
       <find>Date()</find>
       <find>date_utils.today()</find>
@@ -117,6 +117,10 @@
       <find>filena</find>
       <find>playSound</find>
       <find>ddl</find>
+      <find>avatar</find>
+      <find>handle</find>
+      <find>console</find>
+      <find>make</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -129,10 +133,10 @@
         <option value="$PROJECT_DIR$/code-test/frappe-gantt.js" />
         <option value="$PROJECT_DIR$/code-test/index.html" />
         <option value="$PROJECT_DIR$/code-test/task-manage.js" />
-        <option value="$PROJECT_DIR$/task-manage.js" />
         <option value="$PROJECT_DIR$/index.css" />
-        <option value="$PROJECT_DIR$/frappe-gantt.js" />
         <option value="$PROJECT_DIR$/frappe-gantt.css" />
+        <option value="$PROJECT_DIR$/frappe-gantt.js" />
+        <option value="$PROJECT_DIR$/task-manage.js" />
         <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
@@ -434,38 +438,57 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/frappe-gantt.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="1404" column="46" lean-forward="true" selection-start-line="1404" selection-start-column="46" selection-end-line="1404" selection-end-column="46" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/flag_81f0ec.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/task-manage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="144" column="7" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="7" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/flag_8a8a8a.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/frappe-gantt.css">
+    <entry file="file://$PROJECT_DIR$/flag_eba754.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/flag_f0d18b.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chat_window.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="20" />
+        <state relative-caret-position="442">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
+        <state relative-caret-position="306">
           <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frappe-gantt.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="633">
+          <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/frappe-gantt.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="599">
+          <caret line="1008" column="24" selection-start-line="1008" selection-start-column="17" selection-end-line="1008" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/task-manage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="260" column="4" selection-start-line="260" selection-start-column="4" selection-end-line="260" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="733">
-          <caret line="289" column="39" lean-forward="true" selection-start-line="289" selection-start-column="39" selection-end-line="289" selection-end-column="39" />
+        <state relative-caret-position="-90">
+          <caret line="289" column="74" selection-start-line="289" selection-start-column="74" selection-end-line="289" selection-end-column="74" />
         </state>
       </provider>
     </entry>

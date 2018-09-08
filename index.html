@@ -218,7 +218,7 @@
 
 		<script>
 		  function playSound(filename){
-		      console.log("played!!!");
+		      // console.log("played!!!");
 			var mp3Source = '<source src="' + filename + '.mp3" type="audio/mpeg">';
 			var oggSource = '<source src="' + filename + '.ogg" type="audio/ogg">';
 			var embedSource = '<embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3">';
@@ -244,6 +244,8 @@
 			    		let res;
 				res = snapShot.val();
 				var ifSlack = false;
+				var dep=makeArray(20,20,0);
+				let tasks1=[],tasks2=[],cnt=0;
 				let tasks_roll=[{
 							actor: 0,
 							duration: 0,
@@ -258,8 +260,6 @@
 				console.log(res.events);
 				for(let task_name in res.events)
 					{
-						if(task_name==="sentences")
-							continue;
 						if(task_name==="eventDate") {
 							tasks_roll[0].start = date_utils.parse(res.events[task_name]);
 							tasks_roll[0].end = date_utils.parse(res.events[task_name]);
@@ -270,12 +270,30 @@
 							continue;
 						}
 						if(task_name === "numOfTask")
-						    continue;
-						if(task_name === "slack")
-						    continue;
+                        {
+                            cnt = res.events[task_name];
+                            continue;
+                        }
+
+						if(task_name === "slack") {
+						    if(res.events[task_name] === "false")
+                                ifSlack = false;
+						    else if (res.events[task_name] === "true")ifSlack = true;
+                            continue;
+                        }
 						if(task_name === "buffer")
 						    continue;
-
+						if(task_name==="dependency") {
+                            for(let dependency in res.events[task_name] )
+                            {
+                                console.log(res.events[task_name][dependency]);
+                                if(res.events[task_name][dependency].task1 === "sampleTask1")
+                                    continue;
+                                tasks1.push(res.events[task_name][dependency].task1);
+                                tasks2.push(res.events[task_name][dependency].task2);
+                            }
+							continue;
+						}
 						let in_task = res.events[task_name];
 						let new_name_frag = in_task.action.replace('_', ' ').split(' ');
 						let new_name = "";
@@ -291,7 +309,22 @@
 						},];
 						tasks_roll.push(new_task[0]);
 					}
-
+					console.log(tasks1);
+					for(let i=0;i<tasks1.length;i++)
+                    {
+                        for(let task of tasks_roll)
+                            if(task.name === tasks1[i])
+                            {
+                                for(let tt of tasks_roll)
+                                    if (tt.name === tasks2[i]) {
+                                        task.dependency = tt.id;
+                                        console.log(task.id);
+                                        console.log(tt.id);
+                                        break;
+                                    }
+                                break;
+                            }
+                    }
 
 					tasks_roll = arrangeTask(tasks_roll,ifSlack);
 				var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
@@ -340,7 +373,7 @@
 
 			    sendMessage(newSentence.content, userId2Avatar.get(userId), "right");
 			});
-			console.log(date_utils.now());
+			// console.log(date_utils.now());
 
 			// var tasks = [
 			// 	{

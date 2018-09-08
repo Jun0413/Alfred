@@ -470,8 +470,8 @@ var Gantt = (function () {
           if (this.invalid) return;
           let avatar_name;
           if(this.task.actor===0)
-              avatar_name = "sgy.png";
-          else if(this.task.actor==="Jason")
+              avatar_name = "flag_f0d18b.png";
+          else if(this.task.actor==="Jason"||this.task.actor==="Default actor")
                   avatar_name = "zjh.png";
           else if(this.task.actor==="Emily")
                   avatar_name = "rjw.png";
@@ -1006,7 +1006,7 @@ var Gantt = (function () {
     
             // svg element
             if (!svg_element) {
-              console.log("creating");
+              // console.log("creating");
                 // create it
                 this.$svg = createSVG('svg', {
                     append_to: wrapper_element,
