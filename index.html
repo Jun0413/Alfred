@@ -241,7 +241,29 @@
 			// removePlanner('rjw');
 
 
-
+			
 		 </script>
+
+		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyB2P8F_RKArqU7fkdMZ3y31pOQT-bwlYng",
+				authDomain: "alfred-6f93d.firebaseapp.com",
+				databaseURL: "https://alfred-6f93d.firebaseio.com",
+				projectId: "alfred-6f93d",
+				storageBucket: "alfred-6f93d.appspot.com",
+				messagingSenderId: "639939505186"
+			};
+			firebase.initializeApp(config);
+
+			let database = firebase.database();
+
+			let ref = database.ref("/");
+
+			ref.on("value", snapShot => {
+				console.log(snapShot.val());
+			});
+		</script>
 	</body>
 </html>
