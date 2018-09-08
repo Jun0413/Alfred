@@ -254,6 +254,9 @@ function padStart(str, targetLength, padString) {
 
 
 function arrangeTask(tasks,ifSlack) {
+    var ddl = date_utils.parse(tasks[0].end);// todo
+    console.log(tasks[0].end);
+    console.log(tasks[0].name);
     var id_map=[];
     var e=makeArray(tasks.length,tasks.length,0);
     //get id map
@@ -291,25 +294,25 @@ function arrangeTask(tasks,ifSlack) {
         }
     }
     //duration
-    for(let i =0;i<tasks.length;i++)
-    {
-        tasks[i].duration = date_utils.diff(date_utils.parse(tasks[i].end), date_utils.parse(tasks[i].start), 'hour');
-    }
+    // for(let i =0;i<tasks.length;i++)
+    // {
+    //     tasks[i].duration = date_utils.diff(date_utils.parse(tasks[i].end), date_utils.parse(tasks[i].start), 'hour');
+    // }
 
-    for(let i=0;i<tasks.length;i++)
-    {
-        for(let j=0;j<tasks.length;j++)
-        {
-            if(e[i][j]==1) {
-                if (Date.parse(tasks[i].start) < Date.parse(tasks[j].end)) {
-                     let duration = date_utils.diff(date_utils.parse(tasks[j].start), date_utils.parse(tasks[j].end), 'hour');
-                    tasks[j].end = date_utils.to_string(date_utils.add(date_utils.parse(tasks[i].start), -1, 'hour'));
-                    tasks[j].start  = date_utils.to_string(date_utils.add(date_utils.parse(tasks[j].end), duration, 'hour'));
-                                    i=0,j=0;
-                }
-            }
-        }
-    }
+    // for(let i=0;i<tasks.length;i++)
+    // {
+    //     for(let j=0;j<tasks.length;j++)
+    //     {
+    //         if(e[i][j]==1) {
+    //             if (Date.parse(tasks[i].start) < Date.parse(tasks[j].end)) {
+    //                  let duration = date_utils.diff(date_utils.parse(tasks[j].start), date_utils.parse(tasks[j].end), 'hour');
+    //                 tasks[j].end = date_utils.to_string(date_utils.add(date_utils.parse(tasks[i].start), -1, 'hour'));
+    //                 tasks[j].start  = date_utils.to_string(date_utils.add(date_utils.parse(tasks[j].end), duration, 'hour'));
+    //                                 i=0,j=0;
+    //             }
+    //         }
+    //     }
+    // }
     //longest path
     let S = [],L=[], e_tmp = [];
     for(let i = 0; i < tasks.length; i++) {
@@ -399,7 +402,7 @@ function arrangeTask(tasks,ifSlack) {
         for(let j=0;j<subtask.length;j++)
             if(node_late[subtask[j]]>max_sub) max_sub=node_late[subtask[j]];
         if(subtask.length!=0) {
-            node_late[i] = node_late[i] + max_sub+24;
+            node_late[i] = node_late[i] + max_sub+1;
         }
     }
     maxl =L[0].duration;
@@ -425,28 +428,44 @@ function arrangeTask(tasks,ifSlack) {
         for(let j=0;j<subtask.length;j++)
             if(node_early[subtask[j]]>max_sub) max_sub=node_early[subtask[j]];
         if(subtask.length!=0){
-            node_early[i]=node_early[i]+max_sub+24;
+            node_early[i]=node_early[i]+max_sub+1;
         }
     }
-    var ddl = date_utils.now()// todo
     var early = [], late= [],slack=[];
     for(let i=0;i<tasks.length;i++)
     {
-        late[i] = date_utils.add(ddl, -1*node_late[i], 'hour');
-        early[i] = date_utils.add(ddl, -1*(maxl - node_early[i]+L[i].duration),'hour');
-        slack = early[i];
-        if(ifSlack)
-            slack = date_utils.add(early[i], date_utils.diff(late[i], early[i])/2*24, 'hour');
-        L[i].start = slack;
+        if(L[i].isddl===1)
+            continue;
+        late[i] = date_utils.add(ddl, -1*node_late[i], 'day');
+        early[i] = date_utils.add(ddl, -1*(maxl - node_early[i]+L[i].duration),'day');
+        slack[i] = date_utils.add(early[i], date_utils.diff(late[i], early[i])/2, 'day');
+        L[i].start = early[i];
+        L[i].slack = slack[i];
         // console.log(L[i].name);
         // console.log(date_utils.diff(late[i], early[i])/2/24*24);
         // console.log(late[i]);
-        L[i].end = date_utils.add(L[i].start,L[i].duration, 'hour');
+        L[i].end = date_utils.add(L[i].start,L[i].duration, 'day');
         // console.log(L[i].end);
         L[i].start = date_utils.to_string(L[i].start);
         L[i].end = date_utils.to_string(L[i].end);
 
     }
-    L.sort(function(a, b){return (Date.parse(a.start) === Date.parse(b.start)?a.name[0] < b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
+    // L.sort(function(a, b){return (Date.parse(a.start) === Date.parse(b.start)?a.name[0] > b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
+    if(ifSlack)
+        for(let i=0;i<tasks.length;i++)
+        {
+            if(L[i].isddl===1)
+                continue;
+            L[i].start = L[i].slack;
+            // console.log(L[i].name);
+            // console.log(date_utils.diff(late[i], early[i])/2/24*24);
+            // console.log(late[i]);
+            L[i].end = date_utils.add(L[i].start,L[i].duration, 'day');
+            // console.log(L[i].end);
+            L[i].start = date_utils.to_string(L[i].start);
+            L[i].end = date_utils.to_string(L[i].end);
+
+        }
+    L.sort(function(a, b){return (Date.parse(a.start) === Date.parse(b.start)?a.name[0] > b.name[0]:Date.parse(a.start) > Date.parse(b.start))});
     return L;
 }
