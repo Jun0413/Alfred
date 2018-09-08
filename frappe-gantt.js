@@ -468,9 +468,9 @@ class Bar {
     draw_avatar(){
       if (this.invalid) return;
       this.$avatar = createSVG('image', {
-          x: this.x-this.height,
+          x: this.x,
           y: this.y,
-          width: this.height,
+          width: 2*this.height,
           height: this.height,
           class: 'bar-avatar',
           href: "robot.png",

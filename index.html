@@ -91,7 +91,7 @@
 
 			<div class="gantt-target"></div>
 
-			<button onclick="myFunction()">Add task</button>
+			<!-- <button onclick="myFunction()">Add task</button> -->
 
 			<div class="planner_list">
 				<h1>Birthday Party Plan</h1>
@@ -132,7 +132,7 @@
 
 		</div>
 
-		<script>
+		<!-- <script>
 			var tasks = [
 				{
 					start: '2018-10-01',
@@ -210,7 +210,96 @@
 				tasks_roll = arrangeTask(tasks_roll);
 				gantt_chart.refresh(tasks_roll);
 			}
+		</script> -->
+
+
+		<script>
+			var tasks = [
+				{
+					start: '2018-10-01',
+					end: '2018-10-08',
+					name: 'Redesign website',
+					id: "Task 0",
+					progress: 20
+				},
+				{
+					start: '2018-10-03',
+					end: '2018-10-06',
+					name: 'Write new content',
+					id: "Task 1",
+					progress: 5,
+				},
+				{
+					start: '2018-10-04',
+					end: '2018-10-08',
+					name: 'Apply new styles',
+					id: "Task 2",
+					dependencies:"Task 6",
+					progress: 10,
+				},
+				{
+					start: '2018-10-08',
+					end: '2018-10-09',
+					name: 'Review',
+					id: "Task 3",
+					dependencies:"Task 5, Task 6",
+					progress: 5,
+				},
+				{
+					start: '2018-10-12',
+					end: '2018-10-12',
+					name: 'Deploy',
+					id: "Task 4",
+					progress: 10,
+				},
+				{
+					start: '2018-10-11',
+					end: '2018-10-12',
+					name: 'Go Live!',
+					id: "Task 5",
+					dependencies:'Task 6',
+					progress: 20,
+					custom_class: 'bar-milestone'
+				},
+			]
+			var tasks_roll = [			{
+							start: '2018-10-13',
+							end: '2018-10-16',
+							name: 'Dead line',
+							id: "Task 6",
+							progress: 30,
+							custom_class: 'bar-milestone'
+						},];
+
+			var gantt_chart = new Gantt(".gantt-target",tasks_roll, {
+				on_click: function (task) {
+					console.log(task);
+				},
+				on_date_change: function(task, start, end) {
+					console.log(task, start, end);
+				},
+				on_progress_change: function(task, progress) {
+					console.log(task, progress);
+				},
+				on_view_change: function(mode) {
+					console.log(mode);
+				}
+			});
+			console.log(gantt_chart);
+			var ifSlack = false;
+			function myFunction() {
+				tasks_roll.push(tasks.pop());
+				tasks_roll = arrangeTask(tasks_roll,ifSlack);
+				gantt_chart.refresh(tasks_roll);
+			}
+
+			function myFunction2() {
+				tasks_roll = arrangeTask(tasks_roll,ifSlack = !ifSlack);
+				gantt_chart.refresh(tasks_roll);}
 		</script>
+		
+		<button onclick="myFunction()">Add task</button>
+		<button onclick="myFunction2()">Slack!</button>
 
 		<script>
 
