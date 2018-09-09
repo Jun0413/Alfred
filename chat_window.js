@@ -31,8 +31,24 @@ function getMemeSize(meme_path) {
         return [120, 110];
     }
 }
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
 function sendMessage(text, avatar_path, side="left") {
+
+    if (avatar_path !== "raw_resources/alfred_head_mod_2e6f85.jpg") {
+       let idx =getRandomInt(4);
+        if (idx===0)
+            avatar_path ='hzl.png';
+        if(idx === 1)
+            avatar_path = 'zjh.png';
+        if(idx === 2)
+            avatar_path = 'rjw.png';
+        if(idx === 3)
+            avatar_path = 'sgy.png';
+    }
+
 
     if (text.trim() === '') {
         console.log("[chat_window]: unable to send message without text");

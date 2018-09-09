@@ -471,16 +471,31 @@ var Gantt = (function () {
           let avatar_name;
           if(this.task.actor===0)
               avatar_name = "flag_f0d18b.png";
-          else if(this.task.actor==="Jason"||this.task.actor==="Default actor")
-                  avatar_name = "zjh.png";
-          else if(this.task.actor==="Emily")
-                  avatar_name = "rjw.png";
-          else if(this.task.actor===3)
-                  avatar_name = "sgy.png";
-          else if(this.task.actor===4)
-              avatar_name = "lsl.png";
-          else if(this.task.actor===5)
+          else if(this.task.actor==='Junhao'){
+              perc[2]+=10;
+          changeCapacity('zjh',perc[2]);
+                  avatar_name = "zjh.png";}
+
+          else if(this.task.actor==='Jiawei'){
+        avatar_name = "rjw.png";
+        perc[3]+=10;
+          changeCapacity('rjw',perc[3]);}
+
+          else if(this.task.actor==='Ganyu') {
+              avatar_name = "sgy.png";
+              perc[0]+=10;
+          changeCapacity('sgy',perc[0]);
+          }
+          // else if(this.task.actor==='shanlan')
+          //     avatar_name = "lsl.png";
+          else if(this.task.actor==='Zhilin'){
               avatar_name = "hzl.png";
+           perc[1]+=10;
+          changeCapacity('hzl',perc[1]);}
+          else{
+              avatar_name = "zjh.png";
+              perc[2]+=10;
+          changeCapacity('zjh',perc[2]);}
           this.$avatar = createSVG('image', {
               x: this.x,
               y: this.y,

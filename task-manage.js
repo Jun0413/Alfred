@@ -254,7 +254,7 @@ function padStart(str, targetLength, padString) {
 
 
 function arrangeTask(tasks,ifSlack) {
-    var ddl = date_utils.parse(tasks[0].end);// todo
+    var ddl = date_utils.add(date_utils.parse(tasks[0].end),-1,'day');// todo
     // console.log(tasks[0].end);
     // console.log(tasks[0].name);
     var id_map=[];
@@ -355,21 +355,22 @@ function arrangeTask(tasks,ifSlack) {
             }
         }
     }
+        console.log(L.length);
     //remap!!!!!!!!!!!!!
 
 
-        for(let i=0;i<tasks.length;i++)
+        for(let i=0;i<tasks.length;i++) {
         if (typeof L[i].id === 'string' || !L[i].id) {
-        let dd=[];
-        if (L[i].id) {
-            dd = L[i].id
-                .split(',')
-                .map(d => d.trim())
-                .filter(d => d);
+                let dd = [];
+                if (L[i].id) {
+                    dd = L[i].id
+                        .split(',')
+                        .map(d => d.trim())
+                        .filter(d => d);
+                }
+                id_map[parseInt(dd[0][5])] = i;
+            }
         }
-        id_map[parseInt(dd[0][5])]=i;
-    }
-
     //remap dependencies!!!
 
     var e=makeArray(tasks.length,tasks.length,0);

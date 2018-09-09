@@ -29,7 +29,7 @@ function removePlanner(name) {
     //     // $(this).remove();
     // });
 }
-
+var perc=[100,10,10,10];
 function changeCapacity(name, percentage) {
     $('#' + name).find('.water').css("top", (100 - percentage)+"%");
 }

@@ -81,7 +81,7 @@
 					<div class="message_input_wrapper">
 						<input type="text" name= "message" class="message_input" placeholder="Type your message here..." onfocus="this.placeholder='Aa'" onfocusout="this.placeholder='Type your message here...'">
 					</div>
-					<div class="send_message" onclick="sendMeme('raw_resources/alfred_out.gif');">
+					<div class="send_message" onclick="sendMessage('test','fff');">
 						<div class="icon"></div>
 						<div class="text"></div>
 					</div>
@@ -127,17 +127,23 @@
 						var toggle = document.getElementById('tgbtn_container');
 						var toggleContainer = document.getElementById('tgbtn');
 						var toggleNumber;
-						toggle.addEventListener('click', function() {
-							toggleNumber = !toggleNumber;
-							if (toggleNumber) {
+						var wasSlack=false;
+						function toggle_button(ifSlack)
+                        {
+                            if(wasSlack!=ifSlack)
+                            {
+                                sendMeme('raw_resources/too_old2care.gif');
+                                wasSlack=ifSlack;
+                            }
+							if (ifSlack) {
 								toggleContainer.style.clipPath = 'inset(0 0 0 50%)';
-								toggleContainer.style.backgroundColor = '#78f24b';
+								toggleContainer.style.backgroundColor = '#78c04b';
 							} else {
 								toggleContainer.style.clipPath = 'inset(0 50% 0 0)';
 								toggleContainer.style.backgroundColor = 'dodgerblue';
 							}
 							console.log(toggleNumber);
-						});
+						};
 					</script>
 
 				</h1>
@@ -187,61 +193,67 @@
 			</div>
 
 		</div>
-
-		<!-- <script>
+		<script>
+            /*
 			var tasks = [
 				{
-					start: '2018-10-01',
-					end: '2018-10-08',
-					name: 'Redesign website',
-					id: "Task 0",
-					progress: 20
-				},
-				{
-					start: '2018-10-03',
-					end: '2018-10-06',
-					name: 'Write new content',
-					id: "Task 1",
+				    duration: 2,
+                    actor: 3,
+					name: 'Buy Decoration',
+					id: "Task 2",
 					progress: 5,
 				},
 				{
-					start: '2018-10-04',
-					end: '2018-10-08',
-					name: 'Apply new styles',
-					id: "Task 2",
-					progress: 10,
-				},
-				{
-					start: '2018-10-08',
-					end: '2018-10-09',
-					name: 'Review',
+				    actor: 2,
+				    duration: 2,
+					name: 'Decorate',
 					id: "Task 3",
 					progress: 5,
 				},
 				{
-					start: '2018-10-12',
-					end: '2018-10-12',
-					name: 'Deploy',
+				    actor: 1,
+				    duration:2,
+					name: 'Plan Game',
 					id: "Task 4",
-					progress: 10,
+					progress: 5,
 				},
 				{
-					start: '2018-10-11',
-					end: '2018-10-11',
-					name: 'Go Live!',
+				    actor: 4,
+				    duration:2,
+					name: 'Buy Gift',
 					id: "Task 5",
-					progress: 20,
-					custom_class: 'bar-milestone'
+					progress: 5,
+				},
+                {
+                    actor: 3,
+				    duration:2,
+					name: 'Booking room',
+					id: "Task 6",
+					progress: 5,
+				},
+                {
+                    actor: 2,
+					duration:2,
+					name: 'Pick Up Cake',
+					id: "Task 1",
+					progress: 5,
+				},
+                {
+                    actor: 1,
+				    duration: 2,
+					name: 'Order Cake',
+					id: "Task 8",
+					progress: 5,
 				},
 			];
-
 			var tasks_roll = [
 				{
+				    actor: 0,
 					start: '2018-10-13',
 					end: '2018-10-13',
 					name: 'Dead line',
-					id: "Task 6",
-					progress: 30,
+					id: "Task 0",
+					progress: 5,
 					custom_class: 'bar-milestone'
 				}
 			];
@@ -266,7 +278,9 @@
 				tasks_roll = arrangeTask(tasks_roll);
 				gantt_chart.refresh(tasks_roll);
 			}
-		</script> -->
+			*/
+		</script>
+        <button onclick="myFunction()" style='visibility: hidden'></button>
 		<script src="https://www.gstatic.com/firebasejs/5.4.2/firebase.js"></script>
 
 		<script>
@@ -291,17 +305,17 @@
 			let database = firebase.database();
 
 			let ref = database.ref("/");
-
+            let workload = [];
+            sendMeme('raw_resources/sum_total.gif');
 			ref.on("value", snapShot => {
 			    playSound('quite-impressed');
 			    		let res;
 				res = snapShot.val();
 				var ifSlack = false;
-				var dep=makeArray(20,20,0);
-				let tasks1=[],tasks2=[],cnt=0;
+				let tasks1=[],tasks2=[],cnt=1;
 				let tasks_roll=[{
 							actor: 0,
-							duration: 0,
+							duration: 1,
 							name: 'ddl',
 							isddl:1,
 							start:date_utils.now(),
@@ -332,6 +346,7 @@
 						    if(res.events[task_name] === "false")
                                 ifSlack = false;
 						    else if (res.events[task_name] === "true")ifSlack = true;
+						    toggle_button(ifSlack);
                             continue;
                         }
 						if(task_name === "buffer")
@@ -339,11 +354,20 @@
 						if(task_name==="dependency") {
                             for(let dependency in res.events[task_name] )
                             {
-                                console.log(res.events[task_name][dependency]);
                                 if(res.events[task_name][dependency].task1 === "sampleTask1")
                                     continue;
-                                tasks1.push(res.events[task_name][dependency].task1);
-                                tasks2.push(res.events[task_name][dependency].task2);
+                                let new_name_frag_1 = res.events[task_name][dependency].task1.replace('_', ' ').split(' ');
+                                let new_name_1 = "";
+						        for (frag of new_name_frag_1)
+                                    new_name_1 += (frag.charAt(0).toUpperCase()+frag.slice(1)+' ');
+
+                                let new_name_frag_2 = res.events[task_name][dependency].task2.replace('_', ' ').split(' ');
+                                let new_name_2 = "";
+						        for (frag of new_name_frag_2)
+                                    new_name_2 += (frag.charAt(0).toUpperCase()+frag.slice(1)+' ');
+                                tasks1.push(new_name_1);
+                                tasks2.push(new_name_2);
+
                             }
 							continue;
 						}
@@ -357,22 +381,22 @@
 							duration:in_task.duration,
 							name: new_name,
 							actor: in_task.actor,
-							id: 'Task '+Math.random().toString(36).slice(2, 9),
+							id: 'Task '+cnt++,
                             progress: 5,
 						},];
 						tasks_roll.push(new_task[0]);
 					}
-					console.log(tasks1);
-					for(let i=0;i<tasks1.length;i++)
+                    for(let i=0;i<tasks2.length;i++)
                     {
                         for(let task of tasks_roll)
-                            if(task.name === tasks1[i])
+                            if(task.name === tasks2[i])
                             {
                                 for(let tt of tasks_roll)
-                                    if (tt.name === tasks2[i]) {
-                                        task.dependency = tt.id;
-                                        console.log(task.id);
-                                        console.log(tt.id);
+                                    if (tt.name === tasks1[i]) {
+                                    if(!task.dependencies)
+                                        task.dependencies = tt.id+',';
+                                    else
+                                        task.dependencies += (tt.id+',');
                                         break;
                                     }
                                 break;
@@ -394,7 +418,7 @@
 						console.log(mode);
 					}
 			});
-			// console.log(gantt_chart);
+			console.log(gantt_chart);
 
 			});
 
@@ -424,27 +448,18 @@
 			newPlanner("hzl", "hzl.png");
 			newPlanner("zjh", "zjh.png");
 			newPlanner("rjw", "rjw.png");
-			newPlanner("lsl", "lsl.png");
+			// newPlanner("lsl", "lsl.png");
 			// removePlanner("sgy");
 			// removePlanner('zjh');
 			// removePlanner('rjw');
 
-			setTimeout(_ => {
-				changeCapacity('zjh', 20);
-				setTimeout(_ => {
-					changeCapacity('zjh', 60);
-					setTimeout(_ => {
-						removePlanner('zjh');
-					}, 1000);
-				}, 2000);
-			}, 2000);
 
 
-
-
+            // changeCapacity('zjh',0.3);
 		 </script>
 		<div id="sound"></div>
-	<button onclick="playSound('quite-impressed');">Play</button>
+	<!--<button onclick="playSound('quite-impressed');">Play</button>-->
+    <!--<button onclick="toggle_button(true)">toggle</button>-->
 
 	</body>
 </html>

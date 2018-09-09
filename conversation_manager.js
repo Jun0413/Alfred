@@ -4,8 +4,8 @@ let sentences = [];
 
 let lastTime;
 let maxTime;
-/*
-window.fbAsyncInit = function() {
+
+/*window.fbAsyncInit = function() {
     FB.init({
         appId            : '1291295337679065',
         autoLogAppEvents : true,
@@ -24,11 +24,11 @@ window.fbAsyncInit = function() {
             function(response) {
                 console.log("[page response]");
                 console.log(response);
-    
+
                 while (sentences.length != 0) {
                     sentences.pop();
                 }
-    
+
                 for (const conv of response.conversations.data) {
                     for (const data of conv.messages.data) {
                         let created_time = Date.parse(data.created_time);
@@ -47,40 +47,44 @@ window.fbAsyncInit = function() {
                         });
                     }
                 }
-    
+
                 console.log(sentences);
-    
+
                 lastTime = maxTime;
-                
+
                 for (const sentence of sentences) {
-    
+
                     let from = sentence.from;
                     let message = sentence.message;
-    
+
                     if (from === "Alfred") {
-                        sendMessage(message, "raw_resources/alfred_head_mod_2e6f85.jpg");
+                        sendMessage(message, "raw_resources/alfred_head_mod_2e6f85.jpg", "right");
                     } else if (from === "Junhao Zeng") {
-                        sendMessage(message, "zjh.png");
+                        // sendMessage(message, "zjh.png");
+                        sendMessage(message, "lsl.png");
                     } else if (from === "Jason Ren") {
-                        sendMessage(message, "rjw.png");
+                        // sendMessage(message, "rjw.png");
+                        sendMessage(message, "lsl.png");
                     } else if (from === "Shi Ganyu") {
-                        sendMessage(message, "sgy.png");
+                        // sendMessage(message, "sgy.png");
+                        sendMessage(message, "lsl.png");
                     } else if (from === "Huang Zhilin"){
-                        sendMessage(message, "hzl.png");
+                        // sendMessage(message, "hzl.png");
+                        sendMessage(message, "lsl.png");
                     } else if (from === "Lanlan Lim") {
                         sendMessage(message, "lsl.png");
                     }
                 }
-    
+
                 // let messages = response.conversations.data[0].messages.data;
             }
         );
-    }, 3000);
+    }, 2000);
 
     setTimeout(_ => {
         this.clearInterval(conv_handler);
         conv_handler = 0;
-    }, 15 * 1000);
+    }, 5 * 60 * 1000);
 
     lastTime = Date.now();
     console.log("[initTime]: ", lastTime);
